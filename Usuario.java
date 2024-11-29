@@ -1,29 +1,34 @@
 public class Usuario extends Thread {
-    private final String idUsuario;
+    private final String nombre;
     private final Tarjeta tarjeta;
+    private final String operacion;
+    private final double monto;
 
-    public Usuario(String idUsuario, Tarjeta tarjeta) {
-        this.idUsuario = idUsuario;
+    public Usuario(String nombre, Tarjeta tarjeta, String operacion, double monto) {
+        this.nombre = nombre;
         this.tarjeta = tarjeta;
+        this.operacion = operacion;
+        this.monto = monto;
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < 5; i++) {
-            double monto = Math.random() * 100;
-            int operacion = (int) (Math.random() * 3);
+        realizarOperacion();
+    }
 
-            switch (operacion) {
-                case 0 -> tarjeta.cargarSaldo(monto);
-                case 1 -> tarjeta.realizarPago(monto);
-                case 2 -> tarjeta.consultarSaldo();
-            }
-
-            try {
-                Thread.sleep((int) (Math.random() * 1000)); // Simula el tiempo entre operaciones
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    private void realizarOperacion() {
+        switch (operacion.toLowerCase()) {
+            case "cargar":
+                tarjeta.cargarSaldo(monto);
+                break;
+            case "pagar":
+                tarjeta.realizarPago(monto);
+                break;
+            case "consultar":
+                System.out.println(nombre + " consulta el saldo: " + tarjeta.consultarSaldo());
+                break;
+            default:
+                System.out.println("Operación no válida.");
         }
     }
 }

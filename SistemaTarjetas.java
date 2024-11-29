@@ -2,24 +2,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaTarjetas {
-    public static void main(String[] args) {
-        Tarjeta tarjeta = new Tarjeta("TARJETA123");
-        List<Usuario> usuarios = new ArrayList<>();
+    private final List<Usuario> usuarios = new ArrayList<>();
 
-        for (int i = 1; i <= 3; i++) {
-            usuarios.add(new Usuario("Usuario" + i, tarjeta));
+    public void agregarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
+    }
+
+    public void iniciarSimulacion() {
+        for (Usuario usuario : usuarios) {
+            usuario.start();
         }
-
-        usuarios.forEach(Thread::start);
-
-        usuarios.forEach(usuario -> {
+        for (Usuario usuario : usuarios) {
             try {
                 usuario.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        });
-
-        System.out.println("Simulación completada.");
+        }
     }
 }

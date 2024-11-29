@@ -2,36 +2,32 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Tarjeta {
     private double saldo;
-    private final String idTarjeta;
     private final ReentrantLock lock = new ReentrantLock();
 
-    public Tarjeta(String idTarjeta) {
-        this.idTarjeta = idTarjeta;
-        this.saldo = 0;
+    public Tarjeta(double saldoInicial) {
+        this.saldo = saldoInicial;
     }
 
     public void cargarSaldo(double monto) {
         lock.lock();
         try {
-            if (monto > 0) {
-                saldo += monto;
-                System.out.println("Saldo cargado: " + monto + " | Saldo actual: " + saldo);
-            } else {
-                System.out.println("Monto no válido para cargar saldo.");
-            }
+            saldo += monto;
+            System.out.println("Saldo cargado: " + monto + ". Saldo actual: " + saldo);
         } finally {
             lock.unlock();
         }
     }
 
-    public void realizarPago(double monto) {
+    public boolean realizarPago(double monto) {
         lock.lock();
         try {
-            if (monto > 0 && saldo >= monto) {
+            if (saldo >= monto) {
                 saldo -= monto;
-                System.out.println("Pago realizado: " + monto + " | Saldo actual: " + saldo);
+                System.out.println("Pago realizado: " + monto + ". Saldo actual: " + saldo);
+                return true;
             } else {
-                System.out.println("Pago rechazado. Fondos insuficientes o monto inválido.");
+                System.out.println("Saldo insuficiente.");
+                return false;
             }
         } finally {
             lock.unlock();
@@ -41,7 +37,6 @@ public class Tarjeta {
     public double consultarSaldo() {
         lock.lock();
         try {
-            System.out.println("Saldo actual: " + saldo);
             return saldo;
         } finally {
             lock.unlock();
