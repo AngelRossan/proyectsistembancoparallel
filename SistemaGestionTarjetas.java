@@ -10,7 +10,7 @@ public class SistemaGestionTarjetas {
 
     private static void mostrarVentanaInicioSesion() {
         JFrame frame = new JFrame("Inicio de Sesión");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cambiado a DISPOSE_ON_CLOSE
         frame.setSize(300, 150);
         frame.setLayout(new BorderLayout());
 
@@ -52,7 +52,7 @@ class InterfazTarjeta {
 
     private void initComponents() {
         frame = new JFrame("Gestión de Tarjeta - Usuario: " + nombreUsuario);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cambiado a DISPOSE_ON_CLOSE para cada ventana de usuario
         frame.setSize(400, 300);
         frame.setLayout(new BorderLayout());
 
