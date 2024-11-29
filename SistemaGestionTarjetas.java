@@ -94,7 +94,7 @@ class InterfazTarjeta {
             usuario.start();
             usuario.join();
         } catch (NumberFormatException ex) {
-            outputArea.append("Por favor, introduce un monto válido.\n");
+            mostrarMensaje("Por favor, introduce un monto válido.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -102,6 +102,7 @@ class InterfazTarjeta {
 
     public void mostrarMensaje(String mensaje) {
         outputArea.append(mensaje + "\n");
+        System.out.println("Usuario [" + nombreUsuario + "]: " + mensaje); // Mensaje en consola con el nombre del usuario
     }
 
     private static class Tarjeta {
@@ -176,7 +177,7 @@ class InterfazTarjeta {
                     tarjeta.consultarSaldo();
                     break;
                 default:
-                    System.out.println("Operación no válida.");
+                    tarjeta.interfaz.mostrarMensaje("Operación no válida.");
             }
         }
     }
